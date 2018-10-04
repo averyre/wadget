@@ -2,12 +2,13 @@ import requests
 import json
 import urllib.request
 from .interface import out
+from .interface import horizontalLine
 
 # The /idgames API path
 
 IDGAMES_API = 'https://www.doomworld.com/idgames/api/api.php?action='
 
-# idgames mirrors to be used when downloading
+# /idgames mirrors to be used when downloading
 
 TEXAS_MIRROR = 'http://ftp.mancubus.net/pub/idgames/'
 NEWYORK_MIRROR = 'http://youfailit.net/pub/idgames/'
@@ -36,18 +37,21 @@ def pingAPI():
 
 # Function to download a WAD using it's ID
 
-def downloadWAD(wadID):
-    # The mirror of idgames to use
+def downloadWAD(fileID):
+    # The mirror of /idgames to use
     selectedMirror = TEXAS_MIRROR
 
-    # Find the WAD by ID and construct the name and path
-    wadResponse = callAPI('get' + '&id=' + wadID)
+    # Find the file by ID and construct the name and path
+    out('Contacting /idgames for file data...')
+    wadResponse = callAPI('get' + '&id=' + fileID)
     wadData = wadResponse.json()
     fileName = str(wadData['content']['filename'])
     wadPath = str(wadData['content']['dir']) + fileName
 
     # Download the file
+    out('Downloading file ' + fileName + '...')
     urllib.request.urlretrieve(selectedMirror + wadPath, fileName)
+
 
 # Function to search for a WAD by filename
 
@@ -80,13 +84,19 @@ def searchWAD(fileName):
         while(resultCount < resultsReturned):
             out('')
             out(searchData['content']['file'][resultCount]['title'])
-            out("WAD ID: " + str(searchData['content']['file'][resultCount]['id']))
-            out('\n ' + str(searchData['content']['file'][resultCount]['description']))
+            out(horizontalLine(
+                len(str(searchData['content']['file'][resultCount]['title']))))
+            out("FILE ID: " +
+                str(searchData['content']['file'][resultCount]['id']))
+            out('\n ' + str(searchData['content']
+                            ['file'][resultCount]['description']))
             resultCount += 1
     else:
         out(searchData['content']['file']['title'])
-        out("WAD ID: " + str(searchData['content']['file']['id']))
+        out(horizontalLine(len(str(searchData['content']['file']['title']))))
+        out("FILE ID: " + str(searchData['content']['file']['id']))
         out('\n ' + str(searchData['content']['file']['description']))
 
-    out('\nFound ' + str(resultsReturned) + ' matching WAD(s) or file(s) in the /idgames archive.')
-    out('Use "wadget <WAD ID>" to download.\n')
+    out('\nFound ' + str(resultsReturned) +
+        ' matching WAD(s) or file(s) in the /idgames archive.')
+    out('Use "wadget <FILE ID>" to download.\n')

@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name = 'wadget',
-    version = '0.0.1',
+    version = '0.0.2',
     packages = ['wadget'],
     entry_points = {
         'console_scripts': [

@@ -25,14 +25,15 @@ To get started with basic usage, we can download the original Doom shareware to 
 ```
 wadget 7043
 ```
-This is all well and good if we know the WAD ID associated with the WAD we'd like. Luckily, wadget has a search function to scrape WAD IDs from /idgames. Let's try:
+This is all well and good if we know the file ID associated with the WAD we'd like. Luckily, wadget has a search function to scrape file IDs from /idgames. Let's try:
 ```
 wadget doom19s -s
 ```
 This will return:
 ```
 DOOM v1.9 - Shareware
-WAD ID: 7043
+---------------------
+FILE ID: 7043
 
  This is the latest and FINAL version of DOOM, version 1.9.  This version
 has various bug fixes, includes the new DM.EXE (DeathManager) shell,
@@ -42,8 +43,9 @@ information about the new programs.  Also included is the quite awesome
 DOOM FAQ v6.666!  Read it and weep!
 
 Found 1 matching WAD(s) or file(s) in the /idgames archive.
-Use "wadget <WAD ID>" to download.
+Use "wadget <FILE ID>" to download.
+
 ```
-Which provides us with our WAD ID needed to download. The "-s" flag lets wadget know we are searching /idgames, not downloading from it. Multiple file results can also be displayed at the same time.
+Which provides us with our file ID needed to download. The "-s" flag lets wadget know we are searching /idgames, not downloading from it. Multiple file results can also be displayed at the same time.
 
 More specific search features will be introduced later!

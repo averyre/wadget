@@ -8,9 +8,9 @@ from .idgames import searchWAD
 # Define the parser to be used from the command line.
 parser = argparse.ArgumentParser()
 parser.add_argument('wad', metavar='WAD',
-                    help='WAD ID to download. Use -s to find one.')
+                    help='File ID to download. Use -s to find one.')
 parser.add_argument('-s', action='store_true', required=False,
-                    help='Search for a WAD ID by filename')
+                    help='Search for a file ID by filename')
 
 
 def main():
@@ -23,7 +23,6 @@ def main():
     # If no arguments are passed, try to download the wad by ID
     else:
         downloadWAD(args.wad)
-    # 15156 test wad.
 
 
 if(__name__ == '__main__'):
