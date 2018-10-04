@@ -15,6 +15,11 @@ pip3 install .
 ```
 You can now use wadget from the command line.
 
+If you'd rather use PyPi, I cannot gurantee how up to date that version will be. At your own discretion you can also use:
+```
+pip3 install wadget
+```
+
 ### Usage
 To get started with basic usage, we can download the original Doom shareware to the working directory using:
 ```
