@@ -44,13 +44,23 @@ def downloadWAD(fileID):
     # Find the file by ID and construct the name and path
     out('Contacting /idgames for file data...')
     wadResponse = callAPI('get' + '&id=' + fileID)
+
+    # Check the response for if the file ID is bad
+    if('Bad Id' in str(wadResponse.json())):
+        out('Bad file ID! Nothing to download.')
+        exit()
+
     wadData = wadResponse.json()
     fileName = str(wadData['content']['filename'])
     wadPath = str(wadData['content']['dir']) + fileName
+    wadName = str(wadData['content']['title'])
+
+    out(wadName + ' was selected.')
 
     # Download the file
-    out('Downloading file ' + fileName + '...')
+    out('Downloading ' + fileName + '...')
     urllib.request.urlretrieve(selectedMirror + wadPath, fileName)
+    out('Done.')
 
 
 # Function to search for a WAD by filename
