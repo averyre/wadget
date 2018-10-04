@@ -1,5 +1,5 @@
 # wadget
-A multi-platform CLI /idgames client for downloading addons quickly.
+A multi-platform CLI /idgames client for downloading Doom addons quickly.
 
 ### Purpose
 Ever since using Linux on the daily I've fallen in love with the command line. Package managers from the CLI have been a godsend for installing software, so I decided to try and port the idea to Doom addons.
