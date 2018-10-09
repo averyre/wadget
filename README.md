@@ -11,17 +11,17 @@ Doom was a game I fell in love with as a kid, and with this CLI tool you can eas
 ### Install
 Firstly, clone or download the git repository and navigate to it within a terminal. You MUST have Python3 and pip (3, if necessary to specify on your OS) installed for wadget to function.
 
-Simply run this command from within the root wadget directory:
+Simply run this command from within the root wadget directory. wadget uses Python3, so you must specify pip3 if necessary on your system:
 ```
 $ pip3 install .
 ```
 You can now use wadget from the command line.
 
+#### PyPi
 PyPi carries the latest "stable" release of wadget:
 ```
 $ pip3 install wadget
 ```
-wadget uses Python3, so you must specify pip3 if necessary on your system.
 
 ### Usage
 To get started with basic usage, we can download Community Chest 3 to the working directory using:
