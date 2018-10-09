@@ -1,6 +1,8 @@
 # wadget
 A multi-platform CLI /idgames client for downloading Doom addons quickly.
 
+Written by Avery Ross using Python3 and the /idgames API.
+
 ### Purpose
 Ever since using Linux on the daily I've fallen in love with the command line. Package managers from the CLI have been a godsend for installing software, so I decided to try and port the idea to Doom addons.
 
@@ -19,6 +21,7 @@ If you'd rather use PyPi, I cannot gurantee how up to date that version will be.
 ```
 pip3 install wadget
 ```
+wadget specifically uses Python3, so you must specifcy pip3 if necessary on your system
 
 ### Usage
 To get started with basic usage, we can download Community Chest 3 to the working directory using:

@@ -9,7 +9,7 @@ from .interface import ynPrompt
 
 # The /idgames API path
 
-IDGAMES_API = 'https://www.doomworld.com/idgames/api/api.php?action='
+IDGAMES_API = 'https://www.doomworld.com/idgames/api/api.php'
 
 # /idgames mirrors to be used when downloading
 
@@ -21,7 +21,7 @@ GREECE_MIRROR = 'http://ftp.ntua.gr/pub/vendors/idgames/'
 
 
 def callAPI(action):
-    response = requests.get(IDGAMES_API + action + '&out=json')
+    response = requests.get(IDGAMES_API + '?action=' + action + '&out=json')
     return response
 
 # A function to ping the /idgames API
@@ -67,11 +67,15 @@ def downloadWAD(fileInput, extractArchive):
         exit()
 
     wadData = wadResponse.json()
-    fileName = str(wadData['content']['filename'])
-    wadPath = str(wadData['content']['dir']) + fileName
-    wadName = str(wadData['content']['title'])
+    fileName = wadData['content']['filename']
+    wadPath = wadData['content']['dir'] + fileName
+    wadName = wadData['content']['title']
 
-    out(wadName + ' was selected.')
+    # Display the filename if no title is found
+    if(wadName != None):
+        out(wadName + ' was selected.')
+    else:
+        out(fileName + ' was selected.')
 
     # Check if the file exists and prompt to overwrite
     if(path.exists(fileName)):
@@ -148,20 +152,42 @@ def searchWAD(fileName, returnfirstFile):
             resultCount = 0
             while(resultCount < resultsReturned):
                 out('')
-                out(searchData['content']['file'][resultCount]['title'])
-                out(horizontalLine(
-                    len(str(searchData['content']['file'][resultCount]['title']))))
+
+                # Display the filename if no title is found for current result
+                if(searchData['content']['file'][resultCount]['title'] == None):
+                    out(searchData['content']['file'][resultCount]['filename'])
+                    out(horizontalLine(
+                        len(str(searchData['content']['file'][resultCount]['filename']))))
+                else:
+                    out(searchData['content']['file'][resultCount]['title'])
+                    out(horizontalLine(
+                        len(str(searchData['content']['file'][resultCount]['title']))))
+
                 out("FILE ID: " +
                     str(searchData['content']['file'][resultCount]['id']))
-                out('\n' + str(searchData['content']
-                               ['file'][resultCount]['description']))
+
+                # Display file description if there is one
+                if(searchData['content']['file'][resultCount]['description'] != None):
+                    out('\n' + str(searchData['content']
+                                   ['file'][resultCount]['description']))
+
                 resultCount += 1
         else:
-            out(searchData['content']['file']['title'])
-            out(horizontalLine(
-                len(str(searchData['content']['file']['title']))))
+            # Display the filename if no title is found
+            if(searchData['content']['file']['title'] == None):
+                out(searchData['content']['file']['filename'])
+                out(horizontalLine(
+                    len(str(searchData['content']['file']['filename']))))
+            else:
+                out(searchData['content']['file']['title'])
+                out(horizontalLine(
+                    len(str(searchData['content']['file']['title']))))
+
             out("FILE ID: " + str(searchData['content']['file']['id']))
-            out('\n' + str(searchData['content']['file']['description']))
+
+            # Display file description if there is one
+            if(searchData['content']['file']['description'] != None):
+                out('\n' + str(searchData['content']['file']['description']))
 
         out('\nFound ' + str(resultsReturned) +
             ' matching WAD(s) or file(s) in the /idgames archive.')
