@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name = 'wadget',
-    version = '0.0.6',
+    version = '0.0.8',
     license = 'MIT License',
     description = 'A multi-platform CLI /idgames client for downloading Doom addons quickly.',
     long_description = open('README.md').read(),
