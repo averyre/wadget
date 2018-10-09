@@ -13,24 +13,24 @@ Firstly, clone or download the git repository and navigate to it within a termin
 
 Simply run this command from within the root wadget directory:
 ```
-pip3 install .
+$ pip3 install .
 ```
 You can now use wadget from the command line.
 
-You can use PyPi to download the latest "stable" release of wadget:
+PyPi carries the latest "stable" release of wadget:
 ```
-pip3 install wadget
+$ pip3 install wadget
 ```
 wadget uses Python3, so you must specify pip3 if necessary on your system.
 
 ### Usage
 To get started with basic usage, we can download Community Chest 3 to the working directory using:
 ```
-wadget cchest3
+$ wadget cchest3
 ```
 If we wanted to search for all Community Chest files, or get a specific file ID for download, we can use the -s flag:
 ```
-wadget cchest -s
+$ wadget cchest -s
 ```
 This will return:
 ```
