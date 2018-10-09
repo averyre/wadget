@@ -1,8 +1,11 @@
 import requests
-import json
+import zipfile
+import os
+from os import path
 import urllib.request
 from .interface import out
 from .interface import horizontalLine
+from .interface import ynPrompt
 
 # The /idgames API path
 
@@ -37,7 +40,7 @@ def pingAPI():
 
 # Function to download a WAD using it's ID or filename
 
-def downloadWAD(fileInput):
+def downloadWAD(fileInput, extractArchive):
     # The mirror of /idgames to use
     selectedMirror = TEXAS_MIRROR
 
@@ -47,6 +50,9 @@ def downloadWAD(fileInput):
         isfileID = True
     else:
         isfileID = False
+        # Append '.zip' if filename is less than 3 characters
+        if(len(fileInput) < 3):
+            fileInput += '.zip'
 
     # Handle it appropriately
     out('Contacting /idgames for file data...')
@@ -67,9 +73,30 @@ def downloadWAD(fileInput):
 
     out(wadName + ' was selected.')
 
+    # Check if the file exists and prompt to overwrite
+    if(path.exists(fileName)):
+        if(ynPrompt('A file with the name ' + fileName + ' already exists in this directory. Would you like to overwrite it?')):
+            out(fileName + ' will be overwritten.')
+        else:
+            out('Exiting...')
+            exit()
+
     # Download the file
     out('Downloading ' + fileName + '...')
     urllib.request.urlretrieve(selectedMirror + wadPath, fileName)
+
+    # Extract it if specified
+    if(extractArchive):
+        # Unpack it
+        out('Extracting ' + fileName + '...')
+        packedFile = zipfile.ZipFile(fileName)
+        packedFile.extractall('.')
+        packedFile.close()
+
+        # Clean up
+        out('Removing leftover archive...')
+        os.remove(fileName)
+
     out('Done.')
 
 
@@ -77,6 +104,10 @@ def downloadWAD(fileInput):
 
 
 def searchWAD(fileName, returnfirstFile):
+    # Append '.zip' if filename is less than 3 characters
+    if(len(fileName) < 3):
+        fileName += '.zip'
+
     out('Contacting /idgames for search query...')
     searchResponse = callAPI('search' + '&query=' + fileName)
     searchData = searchResponse.json()
@@ -90,7 +121,7 @@ def searchWAD(fileName, returnfirstFile):
     # resultsReturned will count every 'filename' in the JSON response
     while(resultsCounting):
         searchString = str(searchResponse.json())
-        resultCount = searchString.find('filename', resultPoint)
+        resultCount = searchString.find('\'filename\': ', resultPoint)
         if resultCount == -1:
             resultsCounting = False
         else:
@@ -104,7 +135,7 @@ def searchWAD(fileName, returnfirstFile):
             out('No file found for query: ' + fileName)
             exit()
         else:
-        # Return the first file ID
+            # Return the first file ID
             if(resultsReturned != 1):
                 fileID = str(searchData['content']['file'][0]['id'])
             else:

@@ -11,6 +11,8 @@ parser.add_argument('file', metavar='file',
                     help='File ID or name to download. Using a filename will download the first /idgames response result. Use -s to search for IDs, which is recommended.')
 parser.add_argument('-s', action='store_true', required=False,
                     help='Search the /idgames database for a file ID by filename')
+parser.add_argument('-e', action='store_true', required=False,
+                    help='Extract the archive after downloading')
 
 
 def main():
@@ -22,7 +24,11 @@ def main():
         searchWAD(args.file, False)
     # If no arguments are passed, try to download the file
     else:
-        downloadWAD(args.file)
+        # Check if we're extracting the archive or not
+        if(args.e):
+            downloadWAD(args.file, True)
+        else:
+            downloadWAD(args.file, False)
 
 
 if(__name__ == '__main__'):
