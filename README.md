@@ -17,11 +17,11 @@ pip3 install .
 ```
 You can now use wadget from the command line.
 
-If you'd rather use PyPi, I cannot gurantee how up to date that version will be. At your own discretion you can also use:
+You can use PyPi to download the latest "stable" release of wadget:
 ```
 pip3 install wadget
 ```
-wadget specifically uses Python3, so you must specifcy pip3 if necessary on your system
+wadget uses Python3, so you must specify pip3 if necessary on your system.
 
 ### Usage
 To get started with basic usage, we can download Community Chest 3 to the working directory using:
