@@ -21,31 +21,44 @@ pip3 install wadget
 ```
 
 ### Usage
-To get started with basic usage, we can download the original Doom shareware to the working directory using:
+To get started with basic usage, we can download Community Chest 3 to the working directory using:
 ```
-wadget 7043
+wadget cchest3
 ```
-This is all well and good if we know the file ID associated with the WAD we'd like. Luckily, wadget has a search function to scrape file IDs from /idgames. Let's try:
+If we wanted to search for all Community Chest files, or get a specific file ID for download, we can use the -s flag:
 ```
-wadget doom19s -s
+wadget cchest -s
 ```
 This will return:
 ```
-DOOM v1.9 - Shareware
----------------------
-FILE ID: 7043
+The Community Chest Project
+---------------------------
+FILE ID: 12021
 
- This is the latest and FINAL version of DOOM, version 1.9.  This version
-has various bug fixes, includes the new DM.EXE (DeathManager) shell,
-the new DWANGO.EXE app, rewritten SETUP.EXE and slightly modified
-SERSETUP and IPXSETUP programs. Read the DM.DOC and DWANGO.DOC on
-information about the new programs.  Also included is the quite awesome
-DOOM FAQ v6.666!  Read it and weep!
+This is a compilation of levels from the Doom Community
 
-Found 1 matching WAD(s) or file(s) in the /idgames archive.
+Community Chest 2
+-----------------
+FILE ID: 13024
+
+Following the success of the original Community Chest, Community Chest 2 is a 32 map megawad including levels made by 26 different authors from the Doom Community. Originally announced almost one year ago in December 2003, it is now complete and ready for your enjoyment.
+
+Community Chest 3
+-----------------
+FILE ID: 15156
+
+The third installment of the series, Community Chest 3 boasts 32 maps made by 20 different authors from the Doom community. After one year of work, they have been made available for your enjoyment.
+
+Community Chest 4
+-----------------
+FILE ID: 16911
+
+The fourth installment of the series, Community Chest 4 boasts 32 maps made by 20 different authors from the Doom community. After four years of work, they have been made available for your enjoyment.<br><br> Included in this package is the base resource WAD compiled for the project, which can be found in cc4-tex.zip. It may be a good starting point if you need a large, varied, and meticulously organized texture WAD for your project!
+
+Found 4 matching WAD(s) or file(s) in the /idgames archive.
 Use "wadget <FILE ID>" to download.
 
 ```
-Which provides us with our file ID needed to download. The "-s" flag lets wadget know we are searching /idgames, not downloading from it. Multiple file results can also be displayed at the same time.
+Which provides us with our file ID that can be used as an alternative method to download. Multiple file results can also be displayed at the same time. This method is useful if wadget is downloading the wrong file using a filename.
 
 More specific search features will be introduced later!

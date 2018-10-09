@@ -35,15 +35,25 @@ def pingAPI():
         exit()
 
 
-# Function to download a WAD using it's ID
+# Function to download a WAD using it's ID or filename
 
-def downloadWAD(fileID):
+def downloadWAD(fileInput):
     # The mirror of /idgames to use
     selectedMirror = TEXAS_MIRROR
 
-    # Find the file by ID and construct the name and path
+    # Check if we have a file ID or archive name
+    if(fileInput.isdigit()):
+        fileID = fileInput
+        isfileID = True
+    else:
+        isfileID = False
+
+    # Handle it appropriately
     out('Contacting /idgames for file data...')
-    wadResponse = callAPI('get' + '&id=' + fileID)
+    if(isfileID):
+        wadResponse = callAPI('get' + '&id=' + fileID)
+    else:
+        wadResponse = callAPI('get' + '&id=' + searchWAD(fileInput, True))
 
     # Check the response for if the file ID is bad
     if('Bad Id' in str(wadResponse.json())):
@@ -63,10 +73,10 @@ def downloadWAD(fileID):
     out('Done.')
 
 
-# Function to search for a WAD by filename
+# Function to search /idgames by filename
 
 
-def searchWAD(fileName):
+def searchWAD(fileName, returnfirstFile):
     out('Contacting /idgames for search query...')
     searchResponse = callAPI('search' + '&query=' + fileName)
     searchData = searchResponse.json()
@@ -87,26 +97,35 @@ def searchWAD(fileName):
             resultsReturned += 1
             resultPoint = resultCount + 1
 
-    # We only need to display one if multiple are not returned
-    out('')
-    if(resultsReturned != 1):
-        resultCount = 0
-        while(resultCount < resultsReturned):
-            out('')
-            out(searchData['content']['file'][resultCount]['title'])
-            out(horizontalLine(
-                len(str(searchData['content']['file'][resultCount]['title']))))
-            out("FILE ID: " +
-                str(searchData['content']['file'][resultCount]['id']))
-            out('\n ' + str(searchData['content']
-                            ['file'][resultCount]['description']))
-            resultCount += 1
+    # If we're only returning the first file, don't output anything
+    if(returnfirstFile == True):
+        if(resultsReturned != 1):
+            fileID = str(searchData['content']['file'][0]['id'])
+        else:
+            fileID = str(searchData['content']['file']['id'])
+        return fileID
     else:
-        out(searchData['content']['file']['title'])
-        out(horizontalLine(len(str(searchData['content']['file']['title']))))
-        out("FILE ID: " + str(searchData['content']['file']['id']))
-        out('\n ' + str(searchData['content']['file']['description']))
+        # We only need to display one if multiple are not returned
+        out('')
+        if(resultsReturned != 1):
+            resultCount = 0
+            while(resultCount < resultsReturned):
+                out('')
+                out(searchData['content']['file'][resultCount]['title'])
+                out(horizontalLine(
+                    len(str(searchData['content']['file'][resultCount]['title']))))
+                out("FILE ID: " +
+                    str(searchData['content']['file'][resultCount]['id']))
+                out('\n' + str(searchData['content']
+                               ['file'][resultCount]['description']))
+                resultCount += 1
+        else:
+            out(searchData['content']['file']['title'])
+            out(horizontalLine(
+                len(str(searchData['content']['file']['title']))))
+            out("FILE ID: " + str(searchData['content']['file']['id']))
+            out('\n' + str(searchData['content']['file']['description']))
 
-    out('\nFound ' + str(resultsReturned) +
-        ' matching WAD(s) or file(s) in the /idgames archive.')
-    out('Use "wadget <FILE ID>" to download.\n')
+        out('\nFound ' + str(resultsReturned) +
+            ' matching WAD(s) or file(s) in the /idgames archive.')
+        out('Use "wadget <FILE ID>" to download.\n')

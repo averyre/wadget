@@ -8,9 +8,9 @@ from .idgames import searchWAD
 # Define the parser to be used from the command line.
 parser = argparse.ArgumentParser()
 parser.add_argument('file', metavar='file',
-                    help='File ID to download. Use -s to find one.')
+                    help='File ID or name to download. Using a filename will download the first /idgames response result. Use -s to search for IDs, which is recommended.')
 parser.add_argument('-s', action='store_true', required=False,
-                    help='Search for a file ID by filename')
+                    help='Search the /idgames database for a file ID by filename')
 
 
 def main():
@@ -19,8 +19,8 @@ def main():
     pingAPI()
     # If the search parameter was passed
     if(args.s):
-        searchWAD(args.file)
-    # If no arguments are passed, try to download the wad by ID
+        searchWAD(args.file, False)
+    # If no arguments are passed, try to download the file
     else:
         downloadWAD(args.file)
 
