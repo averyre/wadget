@@ -99,11 +99,17 @@ def searchWAD(fileName, returnfirstFile):
 
     # If we're only returning the first file, don't output anything
     if(returnfirstFile == True):
-        if(resultsReturned != 1):
-            fileID = str(searchData['content']['file'][0]['id'])
+        # If no file is found, exit
+        if(resultsReturned == 0):
+            out('No file found for query: ' + fileName)
+            exit()
         else:
-            fileID = str(searchData['content']['file']['id'])
-        return fileID
+        # Return the first file ID
+            if(resultsReturned != 1):
+                fileID = str(searchData['content']['file'][0]['id'])
+            else:
+                fileID = str(searchData['content']['file']['id'])
+            return fileID
     else:
         # We only need to display one if multiple are not returned
         out('')
