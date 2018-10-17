@@ -40,7 +40,7 @@ def pingAPI():
 
 # Function to download a WAD using it's ID or filename
 
-def downloadWAD(fileInput, extractArchive):
+def downloadWAD(fileInput, extractArchive, outputDirectory):
     # The mirror of /idgames to use
     selectedMirror = TEXAS_MIRROR
 
@@ -87,19 +87,19 @@ def downloadWAD(fileInput, extractArchive):
 
     # Download the file
     out('Downloading ' + fileName + '...')
-    urllib.request.urlretrieve(selectedMirror + wadPath, fileName)
+    urllib.request.urlretrieve(selectedMirror + wadPath, outputDirectory + fileName)
 
     # Extract it if specified
     if(extractArchive):
         # Unpack it
         out('Extracting ' + fileName + '...')
-        packedFile = zipfile.ZipFile(fileName)
-        packedFile.extractall('.')
+        packedFile = zipfile.ZipFile(outputDirectory + fileName)
+        packedFile.extractall(outputDirectory + '.')
         packedFile.close()
 
         # Clean up
         out('Removing leftover archive...')
-        os.remove(fileName)
+        os.remove(outputDirectory + fileName)
 
     out('Done.')
 
