@@ -1,4 +1,5 @@
 import requests
+from clint.textui import progress
 import zipfile
 import os
 from os import path
@@ -78,16 +79,23 @@ def downloadWAD(fileInput, extractArchive, outputDirectory):
         out(fileName + ' was selected.')
 
     # Check if the file exists and prompt to overwrite
-    if(path.exists(fileName)):
+    if(path.exists(outputDirectory + fileName)):
         if(ynPrompt('A file with the name ' + fileName + ' already exists in this directory. Would you like to overwrite it?')):
             out(fileName + ' will be overwritten.')
         else:
             out('Exiting...')
             exit()
 
-    # Download the file
+    # Download the file and show a progress bar
     out('Downloading ' + fileName + '...')
-    urllib.request.urlretrieve(selectedMirror + wadPath, outputDirectory + fileName)
+    downloadObject = requests.get(selectedMirror + wadPath, stream=True)
+    outputFile = outputDirectory + fileName
+    with open(outputFile, 'wb') as fileWrite:
+        total_length = int(downloadObject.headers.get('content-length'))
+        for chunk in progress.bar(downloadObject.iter_content(chunk_size=1024), expected_size=(total_length / 1024) + 1):
+            if chunk:
+                fileWrite.write(chunk)
+                fileWrite.flush()
 
     # Extract it if specified
     if(extractArchive):
