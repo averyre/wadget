@@ -3,7 +3,6 @@ from clint.textui import progress
 import zipfile
 import os
 from os import path
-import urllib.request
 from .interface import out
 from .interface import horizontalLine
 from .interface import ynPrompt

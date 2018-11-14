@@ -6,7 +6,7 @@ from .idgames import pingAPI
 from .idgames import downloadWAD
 from .idgames import searchWAD
 
-# Define the parser to be used from the command line.
+# Define the parser to be used from the command line
 parser = argparse.ArgumentParser()
 parser.add_argument('file', metavar='file',
                     help='file ID or name to download. Using a filename will download the first /idgames response result. Use -s to search for IDs, which is recommended.')
@@ -19,7 +19,7 @@ parser.add_argument('-wd', action='store_true', required=False,
 
 
 def main():
-    # Parse the args and ping the API.
+    # Parse the args and ping the API
     args = parser.parse_args()
     pingAPI()
     # Set the path to either current directory or DOOMWADDIR
